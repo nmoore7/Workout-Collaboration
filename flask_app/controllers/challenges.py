@@ -15,6 +15,9 @@ def new_challenge():
 
 @app.route('/create_challenge', methods=['POST'])
 def create_challenge():
+    if not Challenge.challenge_validate(request.form):
+        return redirect('/new_challenge')
+
     challenge_id = Challenge.save_challenge(request.form)
 
     session['challenge_id'] = challenge_id
@@ -54,6 +57,11 @@ def enter_leaderboard(challenge_id):
     session['challenge_id'] = challenge_id
 
     return render_template('leaderboard.html', challenge = Challenge.get_leaderboard_table(challenge_id))
+
+# @app.route('/')
+# def challenge_validation():
+#     Challenge.challenge_validate(request.form)
+#     return redirect('/create_challenge')
 
 @app.route('/logout')
 def logout():

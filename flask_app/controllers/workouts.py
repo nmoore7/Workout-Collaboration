@@ -29,6 +29,9 @@ def allowed_file(filename):
 
 @app.route('/save_workout', methods = ['GET', 'POST'])
 def upload_file():
+
+    if not Workout.workout_validate(request.form):
+        return redirect('/log_workout')
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:

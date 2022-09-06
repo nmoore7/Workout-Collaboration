@@ -63,7 +63,12 @@ class Challenge:
 
     @classmethod
     def p_in_c(cls,data):
-        query = ("INSERT INTO participants_has_challenges (participants_id, challenges_id) VALUES(%(participants_id)s,%(challenges_id)s);")
+        query = "INSERT INTO participants_has_challenges (participants_id, challenges_id) VALUES(%(participants_id)s,%(challenges_id)s);"
+        return connectToMySQL(db).query_db(query, data)
+    
+    @classmethod
+    def withdraw(cls, data):
+        query = "DELETE FROM participants_has_challenges WHERE participants_id = %(participants_id)s AND challenges_id = %(challenges_id)s;"
         return connectToMySQL(db).query_db(query, data)
 
     @staticmethod
@@ -95,3 +100,11 @@ class Challenge:
             leaderboard.append(row)
 
         return results
+    
+    @classmethod
+    def challenge_validate(cls, data):
+        valid = True
+        if len(data['name']) < 5:
+            flash("Challenge name must be at least 5 characters")
+            valid = False
+        return valid

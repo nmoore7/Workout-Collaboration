@@ -18,13 +18,22 @@
                 <a class="navbar-brand" href="/logout">logout</a>
             </div>
         </nav>
+        <div class="mb-3" style="color: red;">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
         <form action="/create_challenge" method="post">
             <label for="name">Challenge Name</label>
-            <input class="form-control" type="text" name="name">
+            <input class="form-control" type="text" name="name" required>
             <label for="prize">Challenge Prize (Optional)</label>
             <input class="form-control" type="text" name="prize">
             <label for="expiration">Expiration Date</label>
-            <input class="form-control" type="date" name="expiration">
+            <input class="form-control" type="date" name="expiration" required>
             <div>
                 <p></p>
             </div>

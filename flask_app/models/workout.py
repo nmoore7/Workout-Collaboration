@@ -87,3 +87,11 @@ class Workout:
             workouts.append(row)
         
         return results
+
+    @classmethod
+    def workout_validate(cls, data):
+        valid = True
+        if len(data['description']) < 5:
+            flash("Description must be at least 5 characters")
+            valid = False
+        return valid
